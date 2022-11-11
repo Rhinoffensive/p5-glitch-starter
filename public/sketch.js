@@ -1,5 +1,5 @@
 let socket;
-let address = 'http://localhost:3000'
+let address = 'http://192.168.1.3'
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,6 +19,7 @@ function draw() {
 function incomingMouse(data) {
   fill(255);
   circle(data.x, data.y, 20);
+  console.log(data);
 }
 
 function mouseDragged() {
