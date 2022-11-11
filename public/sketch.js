@@ -1,5 +1,5 @@
 let socket;
-let address = 'http://192.168.1.3'
+let address = 'http://localhost'
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
