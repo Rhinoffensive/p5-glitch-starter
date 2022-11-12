@@ -30,6 +30,10 @@ function deviceTurned() {
   
 }
 
+window.addEventListener("orientationchange", (event) => {
+  console.log(`the orientation of the device is now ${event.target.screen.orientation.angle}`);
+});
+
 
 function draw() {
   // background(100);
