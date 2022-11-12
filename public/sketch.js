@@ -3,14 +3,31 @@ let address = 'http://localhost'
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  // get lower dimension of window
+  let dim_min = min(windowWidth, windowHeight);
+  let dim_max = max(windowWidth, windowHeight);
+
+
+
+  background(128);
+  img.resize(dim_min, dim_min);
+
+
+  
+  image(img, windowWidth/2- dim_min/2, windowHeight/2- dim_min/2);
 
   socket = io();
   socket.on('mouse', incomingMouse);
 }
 
+let img;
+function preload() {
+  img = loadImage('assets/bg-i.png');
+}
+
+
 function draw() {
-  // background(0);
+  // background(100);
   // translate(width/2, height/2);
   // rotate(frameCount/10%TWO_PI)
   // circle(20, 0, 40);

@@ -19,7 +19,7 @@ if (app.get('env') === 'development') {
 
 app.use(express.static('public'));
 app.get('/', function(req, res) {
-  res.sendfile('./public/index.html');
+  res.sendFile('./public/index.html');
 });
 
 app.use(bodyParser.json());
