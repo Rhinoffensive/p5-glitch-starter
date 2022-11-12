@@ -25,6 +25,22 @@ function preload() {
   img = loadImage('assets/bg-i.png');
 }
 
+function deviceTurned() {
+  createCanvas(windowWidth, windowHeight);
+  // get lower dimension of window
+  let dim_min = min(windowWidth, windowHeight);
+  let dim_max = max(windowWidth, windowHeight);
+
+
+
+  background(128);
+  img.resize(dim_min, dim_min);
+
+
+  
+  image(img, windowWidth/2- dim_min/2, windowHeight/2- dim_min/2);
+}
+
 
 function draw() {
   // background(100);
@@ -36,7 +52,7 @@ function draw() {
 function incomingMouse(data) {
   fill(255);
   circle(data.x, data.y, 20);
-  console.log(data);
+  // console.log(data);
 }
 
 function mouseDragged() {
