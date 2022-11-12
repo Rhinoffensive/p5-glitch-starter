@@ -27,19 +27,7 @@ function preload() {
 
 function deviceTurned() {
   console.log('deviceTurned');
-  createCanvas(windowWidth, windowHeight);
-  // get lower dimension of window
-  let dim_min = min(windowWidth, windowHeight);
-  let dim_max = max(windowWidth, windowHeight);
-
-
-
-  background(128);
-  img.resize(dim_min, dim_min);
-
-
   
-  image(img, windowWidth/2- dim_min/2, windowHeight/2- dim_min/2);
 }
 
 
