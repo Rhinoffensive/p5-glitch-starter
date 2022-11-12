@@ -26,6 +26,7 @@ function preload() {
 }
 
 function deviceTurned() {
+  console.log('deviceTurned');
   createCanvas(windowWidth, windowHeight);
   // get lower dimension of window
   let dim_min = min(windowWidth, windowHeight);
