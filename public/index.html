@@ -17,45 +17,78 @@
 <body>
   <!-- Main sketch -->
   <!-- <script src="sketch.js"></script> -->
-  <div id="example_container">
-    
+  <div id="example_container" class="center">
+
     <button id="fullscreen_button">START EXPERIMENT</button>
-    <button id="lock_button">Lock</button>
-    <button id="unlock_button">Unlock</button>
-    <!-- <textarea id="log" rows="7" cols="85"></textarea> -->
+    <!-- <script src="sketch.js"></script> -->
+
+
   </div>
   <script>
- 
+
+    const s = (p) => {
+
+      let x = 100;
+      let y = 100;
+
+      let img;
+      p.setup = function () {
+        p.createCanvas(p.windowWidth, p.windowHeight);
+        // get lower dimension of window
+        let dim_min = p.min(p.windowWidth, p.windowHeight);
+        let dim_max = p.max(p.windowWidth, p.windowHeight);
 
 
-    const log = document.getElementById("log");
 
-    // Lock button: Lock the screen to the other orientation (rotated by 90 degrees)
-    const rotate_btn = document.querySelector('#lock_button');
-    rotate_btn.addEventListener('click', () => {
+        p.background(128);
+        img.resize(dim_min, dim_min);
 
-      const oppositeOrientation = screen.orientation.type.startsWith("portrait") ? "landscape" : "portrait";
-      screen.orientation.lock(oppositeOrientation)
-        .then(() => {
-        }
-        )
-        .catch((error) => {
-        });
-    });
 
-    // Unlock button: Unlock the screen orientation (if locked)
-    const unlock_btn = document.querySelector('#unlock_button');
-    unlock_btn.addEventListener('click', () => {
-      screen.orientation.unlock();
-    });
+
+        p.image(img, p.windowWidth / 2 - dim_min / 2, p.windowHeight / 2 - dim_min / 2);
+      };
+
+      p.preload = function () {
+        img = p.loadImage('assets/bg-i.png');
+      }
+      // p.draw = function () {
+      //   p.background(0);
+      //   p.fill(255);
+      //   p.rect(x, y, 50, 50);
+      // };
+    };
+
+
+
+    // Create a function that load and run the sketch
+    function loadSketch() {
+      // // Load the sketch
+      // var sketch = document.createElement('script');
+      // sketch.src = 'sketch.js';
+      // document.querySelector("#example_container").appendChild(sketch);
+      // // document.body.appendChild(sketch);
+      // console.log("sketch loaded");
+    }
 
     // Full screen button: Set the example to fullscreen.
     const fullscreen_btn = document.querySelector('#fullscreen_button');
     fullscreen_btn.addEventListener('click', () => {
+      loadSketch();
+
       const container = document.querySelector("#example_container");
       container.requestFullscreen().catch((error) => {
       });
       screen.orientation.lock("landscape");
+      fullscreen_btn.hidden = true;
+      let myp5 = new p5(s, 'example_container');
+
+
+
+
+
+
+
+
     });
   </script>
 

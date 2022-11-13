@@ -2,6 +2,7 @@ let socket;
 let address = 'http://localhost'
 
 function setup() {
+  console.log('setup');
   createCanvas(windowWidth, windowHeight);
   // get lower dimension of window
   let dim_min = min(windowWidth, windowHeight);
