@@ -1,5 +1,7 @@
 
 
+declare var createGui:any;
+let gui;
 const left_start = (p: p5) => {
 
     let x = 100;
@@ -29,6 +31,9 @@ const left_start = (p: p5) => {
 
         p.image(car_img, origin.x, origin.y);
 
+     
+
+     
     };
 
     p.preload = function () {
@@ -41,10 +46,10 @@ const left_start = (p: p5) => {
     p.draw = function () {
 
         if (
-            p.mouseX > origin.x - car_width / 2 &&
-            p.mouseX < origin.x + car_width / 2 &&
-            p.mouseY > origin.y - car_height / 2 &&
-            p.mouseY < origin.y + car_height / 2
+            p.mouseX > origin.x - car_width * 2 &&
+            p.mouseX < origin.x + car_width * 2 &&
+            p.mouseY > origin.y - car_height * 2 &&
+            p.mouseY < origin.y + car_height * 2
         ) {
             overBox = true;
         } else {

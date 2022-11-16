@@ -1,13 +1,17 @@
 {
     "compilerOptions": {
-      "module": "none",
-      "noImplicitAny": true,
-      "outFile": "./public/build.js",
-      "preserveConstEnums": true,
-      "removeComments": true,
-      "rootDir": "./sketch/",
-      "sourceMap": true,
-      "target": "es5",
-      "moduleResolution": "node"
-    }
-  }
+        "module": "none",
+        "noImplicitAny": true,
+        "outFile": "./public/build.js",
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "rootDir": "./sketch/",
+        "sourceMap": true,
+        "target": "es5",
+        "moduleResolution": "node",
+        // "allowJs": true
+    },
+    // "include": ["sketch/**/*.ts",],
+    // "exclude": ["node_modules"]
+    
+}
