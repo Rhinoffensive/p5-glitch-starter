@@ -17,14 +17,27 @@ var left_start = function (p) {
         var car_ratio = car_img.width / car_img.height;
         car_width = p.windowWidth / 10;
         car_height = car_width / car_ratio;
-        car_img.resize(car_width, car_height);
+        // car_img.resize(car_width, car_height);
         p.image(base_img, 0, 0);
         p.imageMode(p.CENTER);
         origin = p.createVector(3 * p.windowWidth / 4, p.windowHeight / 2);
         p.image(car_img, origin.x, origin.y);
+        // gui =createGui('Style').setPosition(width - 220, 20)
+        
         gui = p.createGui(this);
+        let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
+        gui.setPosition(3 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
+
+        console.log(gui);
         p.sliderRange(0, 500, 5);
         gui.addObject(params);
+
+        // const slider = document.getElementsByClassName('qs_main')[0];
+        // slider.style.position = 'absolute';
+        // slider.style.left = (p.windowWidth - slider.style.width) + 'px';
+
+        // console.log(slider.style.left);
+
         p.noLoop();
         
     };

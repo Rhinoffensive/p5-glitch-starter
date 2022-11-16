@@ -5,6 +5,9 @@ body {
   display: flex;
   justify-content: center;
 }
+.qs_main {
+width: 100%;
+}
 /* Hide class qs_label div */
 .qs_label {
   display: none;
@@ -12,18 +15,19 @@ body {
 .qs_title_bar{
   display: none;
 }
+/* .qs_main{
 
-/* Center of the screen button */
-/* #button {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+  transform: rotate(90deg);
+  position: relative;
+  top: 40px; left: 40px;
 } */
+/* far right at center .qs_main */
+.qs_main {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+}
 .center {
   
   display: flex;
