@@ -1,6 +1,6 @@
 var gui;
 let params = {
-    r: 500
+    r: 200
 };
 var left_start = function (p) {
     var x = 100;
@@ -26,10 +26,10 @@ var left_start = function (p) {
         
         gui = p.createGui(this);
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(3 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
+        gui.setPosition(p.windowWidth - gui_width/2 - 25, p.windowHeight/2 - gui_width);
 
         console.log(gui);
-        p.sliderRange(0, 500, 5);
+        p.sliderRange(1, 500, 5);
         gui.addObject(params);
 
         // const slider = document.getElementsByClassName('qs_main')[0];
