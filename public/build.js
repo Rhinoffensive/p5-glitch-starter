@@ -41,7 +41,7 @@ var left_start = function (p) {
         gui.addObject(params);
 
         button_eql = p.createButton("✅");
-        button_eql.position(3 * p.windowWidth/4 + gui_width  , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
+        button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
         
         button_eql.mousePressed(p.esit);
        
