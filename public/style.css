@@ -5,16 +5,20 @@ body {
   display: flex;
   justify-content: center;
 }
+
 .qs_main {
-width: 100%;
+  width: 100%;
 }
+
 /* Hide class qs_label div */
 .qs_label {
   display: none;
 }
-.qs_title_bar{
+
+.qs_title_bar {
   display: none;
 }
+
 /* .qs_main{
 
   transform: rotate(90deg);
@@ -28,11 +32,10 @@ width: 100%;
   right: 0px;
   /* transform: rotate(-90deg); */
 }
-.center {
-  
-  display: flex;
-  justify-content: center;
+  .center {
+
+    display: flex;
+    justify-content: center;
   }
 
-canvas {
-}
+  canvas {}
