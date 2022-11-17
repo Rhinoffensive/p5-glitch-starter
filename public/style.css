@@ -19,23 +19,38 @@ body {
   display: none;
 }
 
-/* .qs_main{
 
-  transform: rotate(90deg);
-  position: relative;
-  top: 40px; left: 40px;
-} */
-/* far right at center .qs_main */
 .qs_main {
   position: absolute;
   top: 50%;
   right: 0px;
   /* transform: rotate(-90deg); */
 }
-  .center {
 
-    display: flex;
-    justify-content: center;
-  }
 
-  canvas {}
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid #73AD21;
+}
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+canvas {}
