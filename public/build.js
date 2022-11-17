@@ -40,8 +40,9 @@ var left_start = function (p) {
         p.sliderRange(1, 500, 5);
         gui.addObject(params);
 
-        button_eql = p.createButton("=");
-        button_eql.position(p.windowWidth/2, p.windowHeight/2);
+        button_eql = p.createButton("✅");
+        button_eql.position(3 * p.windowWidth/4 + gui_width  , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
+        
         button_eql.mousePressed(p.esit);
        
 
@@ -56,9 +57,7 @@ var left_start = function (p) {
     };
 
     p.esit = function () {
-        console.log(car_width * (params.r/100));
-        console.log(car_height * (params.r/100));
-
+        socket.emit('esit', car_width * (params.r/100), car_height * (params.r/100));
     } 
 
     p.preload = function () {

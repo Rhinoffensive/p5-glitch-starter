@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/data',function(req,res){
-  res.send(log);
+  res.send('<span style="white-space: pre-line">'+log+'</span>');
 });
 
 app.use(bodyParser.json());
@@ -68,14 +68,15 @@ io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
   console.log("New connection " + socket.id);
-  log += "New connection " + socket.id + "\n";
+  // log += "New connection " + socket.id + "\n";
   // console.log(socket);
 
-  socket.on('mouse', mouseMessage);
+  socket.on('esit', esitChecked);
 
-  function mouseMessage(data) {
+  function esitChecked(data) {
     // socket.broadcast.emit('mouse', data);
-    io.sockets.emit('mouse', data);
+    // io.sockets.emit('mouse', data);
     // console.log(data);
+    log+= "Connection: " + socket.id + ", Car width, height: " + data + "\n";
   }
 }
