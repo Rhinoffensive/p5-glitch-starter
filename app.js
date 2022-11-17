@@ -22,6 +22,10 @@ app.get('/', function(req, res) {
   res.sendFile('./public/index.html');
 });
 
+app.get('/data',function(req,res){
+  res.send(log);
+});
+
 app.use(bodyParser.json());
 app.post('/save/image', (req, res) => {
   savePng(req.body.img);
@@ -54,13 +58,18 @@ let port = process.env.PORT || 3000;
 let server = http.createServer(app).listen(port, function() {
   console.log('Listening on port ' + port + '...');
 });
+let log = "";
 
 let io = socket(server);
 
 io.sockets.on('connection', newConnection);
 
+
+
 function newConnection(socket) {
   console.log("New connection " + socket.id);
+  log += "New connection " + socket.id + "\n";
+  // console.log(socket);
 
   socket.on('mouse', mouseMessage);
 

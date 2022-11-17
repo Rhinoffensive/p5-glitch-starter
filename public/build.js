@@ -2,6 +2,11 @@ var gui;
 let params = {
     r: 200
 };
+let button_eql;
+
+let socket;
+let address = 'http://localhost'
+
 var left_start = function (p) {
     var x = 100;
     var y = 100;
@@ -9,8 +14,11 @@ var left_start = function (p) {
     var car_img;
     var car_width, car_height;
     var origin;
+
    
     p.setup = function () {
+
+        socket = io();
         p.createCanvas(p.windowWidth, p.windowHeight);
         p.background(128);
         base_img.resize(p.windowWidth / 2, p.windowWidth / 2);
@@ -32,6 +40,11 @@ var left_start = function (p) {
         p.sliderRange(1, 500, 5);
         gui.addObject(params);
 
+        button_eql = p.createButton("=");
+        button_eql.position(p.windowWidth/2, p.windowHeight/2);
+        button_eql.mousePressed(p.esit);
+       
+
         // const slider = document.getElementsByClassName('qs_main')[0];
         // slider.style.position = 'absolute';
         // slider.style.left = (p.windowWidth - slider.style.width) + 'px';
@@ -41,6 +54,13 @@ var left_start = function (p) {
         p.noLoop();
         
     };
+
+    p.esit = function () {
+        console.log(car_width * (params.r/100));
+        console.log(car_height * (params.r/100));
+
+    } 
+
     p.preload = function () {
         base_img = p.loadImage('assets/BackCar_Intact_upright.jpg');
         car_img = p.loadImage('assets/car.png');
@@ -49,6 +69,7 @@ var left_start = function (p) {
     var lastPoint;
     var movement = 0;
     p.draw = function () {
+
         if (p.mouseX > origin.x - car_width * 2 &&
             p.mouseX < origin.x + car_width * 2 &&
             p.mouseY > origin.y - car_height * 2 &&
