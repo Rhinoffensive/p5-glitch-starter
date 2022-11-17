@@ -33,9 +33,10 @@
 
   <script src="build.js"></script>
   <script>
-    let myp5 = new p5(left_start, 'example_container_');
+    let myp5;
     const example_container = document.querySelector('#example_container_');
     example_container.hidden = true;
+    let isP5initialize = false;
 
     const fullscreen_btn = document.querySelector('#fullscreen_button');
     fullscreen_btn.addEventListener('click', () => {
@@ -43,6 +44,11 @@
       example_container.requestFullscreen();
       fullscreen_btn.style.display = "none";
       example_container.hidden = false;
+      if (!isP5initialize) {
+        myp5 = new p5(left_start, 'example_container_');
+
+        isP5initialize = true;
+      }
     });
 
     function isDocumentInFullScreenMode() {
