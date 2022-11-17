@@ -26,7 +26,7 @@ var left_start = function (p) {
         
         gui = p.createGui(this);
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(p.windowWidth - gui_width/2 - 25, p.windowHeight/2 - gui_width);
+        gui.setPosition(3 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
 
         console.log(gui);
         p.sliderRange(1, 500, 5);
