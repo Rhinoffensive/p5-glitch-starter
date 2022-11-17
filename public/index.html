@@ -33,18 +33,39 @@
 
   <script src="build.js"></script>
   <script>
-    // Full screen button: Set the example to fullscreen.
+    let myp5 = new p5(left_start, 'example_container_');
+    const example_container = document.querySelector('#example_container_');
+    example_container.hidden = true;
 
     const fullscreen_btn = document.querySelector('#fullscreen_button');
     fullscreen_btn.addEventListener('click', () => {
+      // const example_container = document.querySelector('#example_container_');
+      example_container.requestFullscreen();
+      fullscreen_btn.style.display = "none";
+      example_container.hidden = false;
+    });
+
+    function isDocumentInFullScreenMode() {
+      return document.fullscreenElement !== null;
+    }
 
 
-      const container = document.querySelector("#example_container_");
-      container.requestFullscreen().catch((error) => {
+    addEventListener('fullscreenchange', (event) => {
+      if (!isDocumentInFullScreenMode()) {
+        fullscreen_btn.style.display = "block";
+        example_container.hidden = true;
+      }
+    });
+
+
+    fullscreen_btn.addEventListener('click', () => {
+      // const container = document.querySelector("#example_container_");
+      example_container.requestFullscreen().catch((error) => {
       });
       screen.orientation.lock("landscape");
       fullscreen_btn.hidden = true;
-      let myp5 = new p5(left_start, 'example_container_');
+
+
     });
   </script>
 
