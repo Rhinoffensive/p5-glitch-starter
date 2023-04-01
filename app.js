@@ -8,15 +8,15 @@ const path = require('path');
 
 let app = express();
 
-if (app.get('env') === 'development') {
-  let browserSync = require('browser-sync');
-  let bs = browserSync.create();
+// if (app.get('env') === 'development') {
+//   let browserSync = require('browser-sync');
+//   let bs = browserSync.create();
 
-  bs.init({ logSnippet: false });
-  bs.watch("public/**/*.*").on("change", bs.reload);
+//   bs.init({ logSnippet: false });
+//   bs.watch("public/**/*.*").on("change", bs.reload);
 
-  app.use(require('connect-browser-sync')(bs));
-}
+//   app.use(require('connect-browser-sync')(bs));
+// }
 
 app.use(express.static('public'));
 app.get('/', function(req, res) {
@@ -45,7 +45,6 @@ io.sockets.on('connection', newConnection);
 
 io.sockets.on('requestLog', function(data) {
   io.emit("logUpdated",log);
-  console.log("logRequested");
 });
 
 

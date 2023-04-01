@@ -2,24 +2,39 @@ var gui;
 let params = {
     r: 200
 };
-let button_eql;
+
 
 let socket;
 let address = 'http://localhost'
 
 var left_start = function (p) {
+
+    console.log(p);
     var x = 100;
     var y = 100;
     var base_img;
     var car_img;
     var car_width, car_height;
     var origin;
+    let button_eql;
+
 
    
     p.setup = function () {
 
         socket = io();
-        p.createCanvas(p.windowWidth, p.windowHeight);
+
+        let div = p.createDiv();
+        div.id("left_exp");
+        
+        
+        let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+        // Give your canvas a unique ID
+        canvas.id('canvas1');
+        canvas.parent('left_exp');
+        document.getElementById('left_exp').hidden = true;
+
+        
         p.background(128);
         base_img.resize(p.windowWidth / 2, p.windowWidth / 2);
         var car_ratio = car_img.width / car_img.height;
@@ -32,18 +47,28 @@ var left_start = function (p) {
         p.image(car_img, origin.x, origin.y);
         // gui =createGui('Style').setPosition(width - 220, 20)
         
-        gui = p.createGui(this);
+        gui = p.createGui(this, canvas);
+
+        gui.id = 'guiLeft';
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
         gui.setPosition(3 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
+        // set canvas as parent of gui
 
-        console.log(gui);
+
+
+
+
         p.sliderRange(1, 500, 5);
         gui.addObject(params);
-
-        button_eql = p.createButton("✅");
-        button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
         
-        button_eql.mousePressed(p.esit);
+        // gui.parent('left_exp');
+
+        // button_eql = p.createButton("✅");
+        // button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
+        
+
+        // button_eql.mousePressed(p.esit);
+        // button_eql.mousePressed(p.aa);
         p.noLoop();
         
     };
@@ -107,7 +132,17 @@ var right_start = function (p) {
     p.setup = function () {
 
         socket = io();
-        p.createCanvas(p.windowWidth, p.windowHeight);
+        let div = p.createDiv();
+        div.id("right_exp");
+        
+        
+        let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+        // Give your canvas a unique ID
+        canvas.id('canvas2');
+        canvas.parent('right_exp');
+
+        
+
         p.background(128);
         base_img.resize(p.windowWidth / 2, p.windowWidth / 2);
         var car_ratio = car_img.width / car_img.height;
@@ -120,18 +155,22 @@ var right_start = function (p) {
         p.image(car_img, origin.x, origin.y);
         // gui =createGui('Style').setPosition(width - 220, 20)
         
-        gui = p.createGui(this);
+        gui = p.createGui(this, canvas);
+        
+
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
         gui.setPosition(1 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
+        
 
-        console.log(gui);
+       
         p.sliderRange(1, 500, 5);
         gui.addObject(params);
 
-        button_eql = p.createButton("✅");
-        button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
+        // button_eql = p.createButton("✅");
+        // button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
         
-        button_eql.mousePressed(p.esit);
+        // button_eql.mousePressed(p.esit);
+        // button_eql.mousePressed(p.aa);
         p.noLoop();
         
     };
