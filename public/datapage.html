@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Log Viewer</title>
+  </head>
+  <body>
+    <div id="log-content"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const logContent = document.getElementById('log-content');
+      
+
+      socket.on('logUpdated', function(log) {
+        logContent.innerHTML = '<span style="white-space: pre-line">' + log + '</span>';
+      });
+
+       // request log from socket
+       socket.emit('requestLog');
+    </script>
+  </body>
+</html>

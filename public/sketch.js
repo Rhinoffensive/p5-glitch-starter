@@ -26,10 +26,6 @@ function preload() {
   img = loadImage('assets/bg-i.png');
 }
 
-// function deviceTurned() {
-//   console.log('deviceTurned');
-  
-// }
 
 window.addEventListener("orientationchange", (event) => {
   console.log(`the orientation of the device is now ${event.target.screen.orientation.angle}`);
