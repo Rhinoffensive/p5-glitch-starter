@@ -18,6 +18,14 @@ var left_start = function (p) {
     var origin;
     let button_eql;
 
+    p.setSliderRandom = function () {
+        // Set Params to random values between 1, 500 multiply of 5
+        params.r = p.random(1, 100) * 5;
+        console.log(params.r);
+        p.draw();
+    }
+
+
 
    
     p.setup = function () {
@@ -52,6 +60,8 @@ var left_start = function (p) {
         gui.id = 'guiLeft';
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
         gui.setPosition(3 * p.windowWidth/4 - gui_width /2, p.windowHeight - 50);
+
+        
         // set canvas as parent of gui
 
 
@@ -128,6 +138,14 @@ var right_start = function (p) {
     var car_width, car_height;
     var origin;
 
+
+    p.setSliderRandom = function () {
+        // Set Params to random values between 1, 500 multiply of 5
+        params.r = p.floor(p.random(1, 100)) * 5 + 1;
+        console.log(params.r);
+        p.draw();
+    }
+
    
     p.setup = function () {
 
@@ -165,6 +183,7 @@ var right_start = function (p) {
        
         p.sliderRange(1, 500, 5);
         gui.addObject(params);
+
 
         // button_eql = p.createButton("✅");
         // button_eql.position(p.windowWidth/2   , p.windowHeight - 50).style('font-size', '20px', 'transform', 'translateY(-50%)', 'background-color', 'gray','position', 'absolute');
