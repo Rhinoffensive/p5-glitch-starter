@@ -40,6 +40,20 @@
       z-index: 4;
 		}
 
+    .end-experiment {
+			position: absolute;
+			top: 10px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 2rem;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			background-color: red;
+			color: white;
+      z-index: 4;
+		}
+
   #canvas1,
   #canvas2 {
     position: absolute;
@@ -75,6 +89,7 @@
   <script>
     let trailCount = 1;
     let myp5_left, myp5_right;
+    
     let isRightStart = true; // keep track of current state
     const example_container = document.querySelector('#example_container_');
     const button = document.querySelector('#toggle_button');
@@ -83,6 +98,25 @@
     let isP5initialize = false;
 
     const counterEl = document.getElementById("trail-count");
+
+    let test_data = {data : [] };
+
+    function updateCounter() {
+			trailCount++;
+			counterEl.textContent = trailCount;
+
+			if (trailCount > 4) {
+				const endExperimentBtn = document.createElement("button");
+				endExperimentBtn.classList.add("button", "end-experiment");
+				endExperimentBtn.textContent = "End Experiment";
+				example_container.appendChild(endExperimentBtn);
+        endExperimentBtn.addEventListener("click", () => {
+          console.log(test_data);
+          socket.emit("end-experiment", test_data);
+          window.location.href = "anotherpage.html";
+        });
+			}
+		}
 
 
     const fullscreen_btn = document.querySelector('#fullscreen_button');
@@ -111,18 +145,21 @@
 
     });
 
+    button.addEventListener('click',updateCounter);
+
     button.addEventListener('click', () => {
-      trailCount++;
-      counterEl.innerHTML = trailCount;
+      
       
       isRightStart = !isRightStart; // toggle the state
       if (isRightStart) {
+        myp5_right.esit();
 
         document.getElementById('left_exp').hidden = true;
         document.getElementById('right_exp').hidden = false;
       }
       else {
-
+        myp5_left.esit();
+        console.log(test_data);
         document.getElementById('left_exp').hidden = false;
         document.getElementById('right_exp').hidden = true;
       }

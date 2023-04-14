@@ -4,10 +4,10 @@ let params = {
 };
 
 
-let socket;
-let address = 'http://localhost'
+
 
 var left_start = function (p) {
+    let experiment = "LeftUP";
 
     console.log(p);
     var x = 100;
@@ -84,6 +84,8 @@ var left_start = function (p) {
     };
 
     p.esit = function () {
+        
+        test_data.data.push(car_width * (params.r/100));
         socket.emit('esit', car_width * (params.r/100), car_height * (params.r/100));
     } 
 
