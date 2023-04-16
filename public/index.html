@@ -89,6 +89,7 @@
   <script>
     let trailCount = 1;
     let myp5_left, myp5_right;
+    let test_result= {}; // test result handler
     
     let isRightStart = true; // keep track of current state
     const example_container = document.querySelector('#example_container_');
@@ -111,9 +112,17 @@
 				endExperimentBtn.textContent = "End Experiment";
 				example_container.appendChild(endExperimentBtn);
         endExperimentBtn.addEventListener("click", () => {
-          console.log(test_data);
-          socket.emit("end-experiment", test_data);
-          window.location.href = "anotherpage.html";
+
+          test_data.data.push(left_result);
+          test_data.data.push(right_result);
+
+          // console.log(test_data);
+          // console.log(calculateUserCarSizeDifference(test_data));
+          var carsize_diff = calculateUserCarSizeDifference(test_data);
+          
+          socket.emit("end-experiment", test_result);
+          window.location.href = "results/"+ carsize_diff.widthPercent + "/1";
+          // window.location.href = "anotherpage.html";
         });
 			}
 		}
@@ -159,7 +168,7 @@
       }
       else {
         myp5_left.esit();
-        console.log(test_data);
+      
         document.getElementById('left_exp').hidden = false;
         document.getElementById('right_exp').hidden = true;
       }
@@ -189,6 +198,41 @@
       screen.orientation.lock("landscape");
       fullscreen_btn.hidden = true;
     });
+
+
+    function calculateUserCarSizeDifference(obj) {
+  let totalWidth = 0;
+  let totalHeight = 0;
+  let count = 0;
+
+  obj.data.forEach(obj => {
+    obj.user_car_size.forEach(size => {
+      totalWidth += size[0];
+      totalHeight += size[1];
+      count++;
+    });
+  });
+
+  let avgWidth = totalWidth / count;
+  let avgHeight = totalHeight / count;
+
+  let baseWidth = obj.data[0].base_car_size[0];
+  let baseHeight = obj.data[0].base_car_size[1];
+
+  let widthDiff = ((avgWidth - baseWidth) / baseWidth);
+  let heightDiff = ((avgHeight - baseHeight) / baseHeight);
+  let widthPer = (avgWidth/baseWidth);
+
+  return {
+    avgWidth: avgWidth.toFixed(2),
+    avgHeight: avgHeight.toFixed(2),
+    widthDiff: widthDiff.toFixed(2),
+    heightDiff: heightDiff.toFixed(2),
+    widthPercent: widthPer
+
+  };
+}
+
   </script>
 
 </body>

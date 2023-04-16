@@ -31,9 +31,9 @@ app.get('/data', function (req, res) {
 });
 
 
-app.get('/result', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'result.html'));
-});
+// app.get('/result', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'public', 'result.html'));
+// });
 
 
 
