@@ -7,6 +7,7 @@ let socket = require('socket.io');
 const path = require('path');
 
 let app = express();
+app.set('view engine', 'ejs');
 
 // if (app.get('env') === 'development') {
 //   let browserSync = require('browser-sync');
@@ -23,10 +24,23 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.use(express.static('public'));
+
 app.get('/data', function (req, res) {
   // res.send('<span style="white-space: pre-line">'+log+'</span>');
   res.sendFile(path.join(__dirname, 'public', 'datapage.html'));
+});
+
+
+app.get('/result', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'result.html'));
+});
+
+
+
+app.get('/results/:scale1/:scale2', function (req, res) {
+  const scale1 = req.params.scale1;
+  const scale2 = req.params.scale2;
+  res.render('result', { scale1: scale1, scale2: scale2 });
 });
 
 

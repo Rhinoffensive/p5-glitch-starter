@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image with Overlay</title>
+    <style>
+      body {
+        background-color: rgba(128, 128, 128, 1.0);
+        margin: 0;
+        padding: 0;
+      }
+
+      .image-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Wrap the pair containers */
+      }
+
+      .pair-container {
+        width: 50%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      .image-overlay_up {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/overlay.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        box-sizing: border-box;
+        z-index: 2;
+        transform-origin: center;
+        transform: scale(<%= scale1 %>);
+      }
+      .image-overlay_down {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/overlay_down.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        box-sizing: border-box;
+        z-index: 2;
+        transform-origin: center;
+        transform: scale(<%= scale2 %>);
+      }
+
+      .scale-text {
+        position: absolute;
+        z-index: 3;
+        color: rgb(0, 0, 0);
+        font-size: 48px; /* Bigger font size */
+        font-weight: bold;
+        text-align: center;
+        top: 50%; /* Center the text vertically */
+        left: 50%; /* Center the text horizontally */
+        transform: translate(-50%, -50%); /* Adjust the position to be exactly at the center */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <div class="pair-container">
+        <img src="/assets/car.png" alt="Image">
+        <div class="image-overlay_up"></div>
+        <div class="scale-text"><%= scale1 > 1 ? ((scale1 - 1) * 100).toFixed(2) + '% larger' : ((1 - scale1) * 100).toFixed(2) + '% smaller' %></div>
+      </div>
+      <div class="pair-container">
+        <img src="/assets/car_down.png" alt="Image">
+        <div class="image-overlay_down"></div>
+        <div class="scale-text"><%= scale2 > 1 ? ((scale2 - 1) * 100).toFixed(2) + '% larger' : ((1 - scale2) * 100).toFixed(2) + '% smaller' %></div>
+      </div>
+    </div>
+  </body>
+</html>
