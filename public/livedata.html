@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plotly Line Chart</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="chart"></div>
+
+    <script>
+        // Your JSON object
+        const result = {
+            "data": [
+        {
+            "experiment": "LeftUP",
+            "user_car_size": [
+                [
+                    226.56,
+                    257.92677248677245
+                ],
+                [
+                    241.92000000000002,
+                    275.41333333333336
+                ]
+            ],
+            "base_size": [
+                960,
+                960
+            ],
+            "base_car_size": [
+                208.23259372609027,
+                237.061973986228
+            ]
+        },
+        {
+            "experiment": "RightUP",
+            "user_car_size": [
+                [
+                    232.32,
+                    264.4842328042328
+                ],
+                [
+                    228.48,
+                    260.1125925925926
+                ]
+            ],
+            "base_size": [
+                960,
+                960
+            ],
+            "base_car_size": [
+                208.23259372609027,
+                237.061973986228
+            ]
+        }
+    ]
+        };
+
+        // Extract data from the JSON object
+        const data = result.data;
+        const userCarSizeData = data.map(item => item.user_car_size);
+        const experimentLabels = data.map(item => item.experiment);
+
+        // Calculate average user car size
+        const averageUserCarSize = userCarSizeData.reduce((sums, userCarSize) => {
+            return [
+                [
+                    sums[0][0] + userCarSize[0][0],
+                    sums[0][1] + userCarSize[0][1]
+                ],
+                [
+                    sums[1][0] + userCarSize[1][0],
+                    sums[1][1] + userCarSize[1][1]
+                ]
+            ];
+        }, [[0, 0], [0, 0]])
+        .map(sum => [sum[0] / userCarSizeData.length, sum[1] / userCarSizeData.length]);
+
+        // Create the individual user car size traces
+        const individualUserTraces = userCarSizeData.map((userCarSize, index) => {
+            return {
+                x: [0, 1],
+                y: userCarSize.map(size => size[1]),
+                mode: 'lines',
+                name: experimentLabels[index]
+            };
+        });
+
+        // Create the average user car size trace
+        const averageUserTrace = {
+            x: [0, 1],
+            y: averageUserCarSize.map(size => size[1]),
+            mode: 'lines',
+            name: 'Average'
+        };
+
+        // Combine all traces
+        const traces = [...individualUserTraces, averageUserTrace];
+
+        // Define layout
+        const layout = {
+            title: 'User Car Sizes',
+            xaxis: {
+                title: 'Index',
+                tickvals: [0, 1]
+            },
+            yaxis: {
+                title: 'Size'
+            }
+        };
+
+        // Create the plot
+        Plotly.newPlot('chart', traces, layout);
+    </script>
+</body>
+</html>
