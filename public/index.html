@@ -130,15 +130,16 @@
       example_container.requestFullscreen();
       fullscreen_btn.style.display = "none";
       example_container.hidden = false;
-     
+
       if (!isP5initialize) {
         myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
         myp5_right = new p5(right_start, 'example_container_'); // use the current state to determine which function to use
 
         isP5initialize = true;
+
+
+   
       }
-      button.hidden = false;
-      button.style.display = "block";
 
 
 

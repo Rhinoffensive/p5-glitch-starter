@@ -39,6 +39,10 @@ var left_start = function (p) {
    
     p.setup = function () {
 
+        const button = document.querySelector('#toggle_button');
+        button.style.display = "block";
+        button.hidden = false;
+
         socket = io();
 
         let div = p.createDiv();
@@ -139,6 +143,9 @@ var right_start = function (p) {
 
    
     p.setup = function () {
+        const button = document.querySelector('#toggle_button');
+        button.style.display = "block";
+        button.hidden = false;
 
         socket = io();
         let div = p.createDiv();
