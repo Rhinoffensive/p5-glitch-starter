@@ -36,6 +36,12 @@ var left_start = function (p) {
         p.draw();
     }
 
+    p.unhide = function () {
+       
+        left_exp_div.style.display = "block";
+        document.getElementById('left_exp').hidden = false;
+
+    }
 
 
 
@@ -55,7 +61,9 @@ var left_start = function (p) {
         // Give your canvas a unique ID
         canvas.id('canvas1');
         canvas.parent('left_exp');
-        document.getElementById('left_exp').hidden = true;
+        // hideCanvas(p);
+        // document.getElementById('left_exp').hidden = true;
+        // document.getElementById('left_exp').style.display = 'none';
 
 
         p.background(128);
@@ -143,6 +151,10 @@ var left_reverse_start = function (p) {
         p.draw();
     }
 
+    p.unhide = function () {
+        document.getElementById('left_reverse_exp').hidden = false;
+    }
+
 
     p.setup = function () {
 
@@ -157,7 +169,7 @@ var left_reverse_start = function (p) {
 
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         // Give your canvas a unique ID
-        canvas.id('canvas1');
+        canvas.id('canvas2');
         canvas.parent('left_reverse_exp');
         document.getElementById('left_reverse_exp').hidden = true;
 
@@ -261,6 +273,10 @@ var right_start = function (p) {
         p.draw();
     }
 
+    p.unhide = function () {
+        document.getElementById('right_exp').hidden = false;
+    }
+
 
     p.setup = function () {
         const button = document.querySelector('#toggle_button');
@@ -274,8 +290,9 @@ var right_start = function (p) {
 
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         // Give your canvas a unique ID
-        canvas.id('canvas2');
+        canvas.id('canvas3');
         canvas.parent('right_exp');
+        document.getElementById('right_exp').hidden = true;
 
 
 
@@ -355,6 +372,10 @@ var right_reverse_start = function (p) {
         p.draw();
     }
 
+    p.unhide = function () {
+        document.getElementById('right_reverse_exp').hidden = false;
+    }
+
 
     p.setup = function () {
         const button = document.querySelector('#toggle_button');
@@ -368,8 +389,9 @@ var right_reverse_start = function (p) {
 
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         // Give your canvas a unique ID
-        canvas.id('canvas2');
+        canvas.id('canvas4');
         canvas.parent('right_reverse_exp');
+        document.getElementById('right_reverse_exp').hidden = true;
 
 
 

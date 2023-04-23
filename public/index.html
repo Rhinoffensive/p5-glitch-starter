@@ -28,7 +28,7 @@
     border: none;
     border-radius: 4px;
     color: white;
-    z-index: 2;
+    z-index: 5;
     display: none;
   }
 
@@ -39,7 +39,7 @@
     background-color: yellow;
     padding: 5px;
     border-radius: 5px;
-    z-index: 4;
+    z-index: 5;
   }
 
   .end-experiment {
@@ -53,32 +53,47 @@
     cursor: pointer;
     background-color: red;
     color: white;
-    z-index: 4;
+    z-index: 5;
   }
 
   #canvas1,
-  #canvas2 {
+  #canvas2,
+  #canvas3,
+  #canvas4 {
     position: absolute;
     left: 0;
     top: 0;
     border: 1px solid gray;
   }
 
+  #canvas1 {
+    z-index: 4;
+  }
+
   #canvas2 {
+    z-index: 3;
+  }
+
+  #canvas3 {
+    z-index: 2;
+  }
+
+  #canvas4 {
     z-index: 1;
   }
 
-  #loading_text {
-  position: absolute;
-  color: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-}
 
+
+  #loading_text {
+    position: absolute;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
 </style>
 
 <body>
@@ -99,6 +114,7 @@
   <script>
     let trailCount = 1;
     let myp5_left, myp5_right, myp5_left_reverse, myp5_right_reverse;
+    let left_exp_div, right_exp_div, left_reverse_exp_div, right_reverse_exp_div;
     let test_result = {}; // test result handler
 
     let isRightStart = true; // keep track of current state
@@ -150,28 +166,28 @@
       example_container.hidden = false;
 
       if (!isP5initialize) {
-        myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
-        myp5_right = new p5(right_start, 'example_container_'); // use the current state to determine which function to use
-
-        myp5_left_reverse = new p5(left_reverse_start, 'example_container_'); // use the current state to determine which function to use
         myp5_right_reverse = new p5(right_reverse_start, 'example_container_'); // use the current state to determine which function to use
-
+        myp5_left_reverse = new p5(left_reverse_start, 'example_container_'); // use the current state to determine which function to use
+        myp5_right = new p5(right_start, 'example_container_'); // use the current state to determine which function to use
+        myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
 
         isP5initialize = true;
 
-
+        
 
       }
+
+
 
       // left_exp_div.style.display = "none";
     });
 
 
     document.addEventListener('DOMContentLoaded', function () {
-      let left_exp_div = document.getElementById('left_exp');
-      let right_exp_div = document.getElementById('right_exp');
-      let left_reverse_exp_div = document.getElementById('left_reverse_exp');
-      let right_reverse_exp_div = document.getElementById('right_reverse_exp');
+      left_exp_div = document.getElementById('left_exp');
+      right_exp_div = document.getElementById('right_exp');
+      left_reverse_exp_div = document.getElementById('left_reverse_exp');
+      right_reverse_exp_div = document.getElementById('right_reverse_exp');
 
     });
 
@@ -180,30 +196,61 @@
     // let state = 0; // Initialize state variable
     button.addEventListener('click', () => {
       // state = (state + 1) % 4; // Increment and wrap state between 0 and 3
-      state = (trailCount-1) % 4;
+      state = (trailCount - 1) % 4;
+      if (trailCount > 4) {
+        // Random integer between 0 and 3
+        state = Math.floor(Math.random() * 4);
+      }
 
       // Hide all elements by default
-      document.getElementById('left_exp').hidden = true;
-      document.getElementById('right_exp').hidden = true;
-      document.getElementById('left_reverse_exp').hidden = true;
-      document.getElementById('right_reverse_exp').hidden = true;
+      let left_exp = document.getElementById('left_exp');
+      let right_exp = document.getElementById('right_exp');
+      let left_reverse_exp = document.getElementById('left_reverse_exp');
+      let right_reverse_exp = document.getElementById('right_reverse_exp');
+
+      left_exp.hidden = true;
+      right_exp.hidden = true;
+      left_reverse_exp.hidden = true;
+      right_reverse_exp.hidden = true;
+
+      // document.getElementById('left_exp').hidden = true;
+      // document.getElementById('right_exp').hidden = true;
+      // document.getElementById('left_reverse_exp').hidden = true;
+      // document.getElementById('right_reverse_exp').hidden = true;
+      console.log(state);
 
       switch (state) {
         case 0: // left_exp
           myp5_left.esit();
-          document.getElementById('left_exp').hidden = false;
+          left_exp.hidden = false;
+          right_exp.hidden = true;
+          left_reverse_exp.hidden = true;
+          right_reverse_exp.hidden = true;
+          // document.getElementById('left_exp').hidden = false;
           break;
         case 1: // right_exp
           myp5_right.esit();
-          document.getElementById('right_exp').hidden = false;
+          left_exp.hidden = true;
+          right_exp.hidden = false;
+          left_reverse_exp.hidden = true;
+          right_reverse_exp.hidden = true;
+          // document.getElementById('right_exp').hidden = false;
           break;
         case 2: // left_reverse_exp
           myp5_left_reverse.esit(); // Replace with appropriate function call if needed
-          document.getElementById('left_reverse_exp').hidden = false;
+          left_exp.hidden = true;
+          right_exp.hidden = true;
+          left_reverse_exp.hidden = false;
+          right_reverse_exp.hidden = true;
+          // document.getElementById('left_reverse_exp').hidden = false;
           break;
         case 3: // right_reverse_exp
           myp5_right_reverse.esit(); // Replace with appropriate function call if needed
-          document.getElementById('right_reverse_exp').hidden = false;
+          left_exp.hidden = true;
+          right_exp.hidden = true;
+          left_reverse_exp.hidden = true;
+          right_reverse_exp.hidden = false;
+          // document.getElementById('right_reverse_exp').hidden = false;
           break;
       }
 
@@ -268,7 +315,21 @@
 
       };
     }
+    function hideCanvas(p5Instance) {
+      if (p5Instance && p5Instance.canvas) {
+        p5Instance.canvas.parrent.hidden = false;
+      } else {
+        console.error("p5Instance or canvas is not defined");
+      }
+    }
 
+    function unhideCanvas(p5Instance) {
+      if (p5Instance && p5Instance.canvas) {
+        p5Instance.canvas.parrent.hidden = false;
+      } else {
+        console.error("p5Instance or canvas is not defined");
+      }
+    }
   </script>
 
 </body>
