@@ -85,7 +85,7 @@
 
   <script>
     let trailCount = 1;
-    let myp5_left, myp5_right;
+    let myp5_left, myp5_right, myp5_left_reverse, myp5_right_reverse;
     let test_result = {}; // test result handler
 
     let isRightStart = true; // keep track of current state
@@ -97,7 +97,9 @@
 
     const counterEl = document.getElementById("trail-count");
 
-    let test_data = { data: [] };
+    let test_data_up = { data: [] };
+    let test_data_down = { data: [] };
+
 
     function updateCounter() {
       trailCount++;
@@ -110,15 +112,18 @@
         example_container.appendChild(endExperimentBtn);
         endExperimentBtn.addEventListener("click", () => {
 
-          test_data.data.push(left_result);
-          test_data.data.push(right_result);
+          test_data_up.data.push(left_result);
+          test_data_up.data.push(right_result);
+          test_data_down.data.push(left_reverse_result);
+          test_data_down.data.push(right_reverse_result);
 
-          // console.log(test_data);
-          // console.log(calculateUserCarSizeDifference(test_data));
-          var carsize_diff = calculateUserCarSizeDifference(test_data);
+
+          var carsize_diff_up = calculateUserCarSizeDifference(test_data_up);
+          var carsize_diff_down = calculateUserCarSizeDifference(test_data_down);
+
 
           socket.emit("end-experiment", test_result);
-          window.location.href = "results/" + carsize_diff.widthPercent + "/1";
+          window.location.href = "results/" + carsize_diff_up.widthPercent + "/" + carsize_diff_down.widthPercent;
           // window.location.href = "anotherpage.html";
         });
       }
@@ -135,14 +140,15 @@
         myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
         myp5_right = new p5(right_start, 'example_container_'); // use the current state to determine which function to use
 
+        myp5_left_reverse = new p5(left_reverse_start, 'example_container_'); // use the current state to determine which function to use
+        myp5_right_reverse = new p5(right_reverse_start, 'example_container_'); // use the current state to determine which function to use
+
+
         isP5initialize = true;
 
 
-   
+
       }
-
-
-
 
       // left_exp_div.style.display = "none";
     });
@@ -151,32 +157,49 @@
     document.addEventListener('DOMContentLoaded', function () {
       let left_exp_div = document.getElementById('left_exp');
       let right_exp_div = document.getElementById('right_exp');
+      let left_reverse_exp_div = document.getElementById('left_reverse_exp');
+      let right_reverse_exp_div = document.getElementById('right_reverse_exp');
 
     });
 
     button.addEventListener('click', updateCounter);
 
+    // let state = 0; // Initialize state variable
     button.addEventListener('click', () => {
+      // state = (state + 1) % 4; // Increment and wrap state between 0 and 3
+      state = (trailCount-1) % 4;
 
+      // Hide all elements by default
+      document.getElementById('left_exp').hidden = true;
+      document.getElementById('right_exp').hidden = true;
+      document.getElementById('left_reverse_exp').hidden = true;
+      document.getElementById('right_reverse_exp').hidden = true;
 
-      isRightStart = !isRightStart; // toggle the state
-      if (isRightStart) {
-        myp5_right.esit();
-
-        document.getElementById('left_exp').hidden = true;
-        document.getElementById('right_exp').hidden = false;
-      }
-      else {
-        myp5_left.esit();
-
-        document.getElementById('left_exp').hidden = false;
-        document.getElementById('right_exp').hidden = true;
+      switch (state) {
+        case 0: // left_exp
+          myp5_left.esit();
+          document.getElementById('left_exp').hidden = false;
+          break;
+        case 1: // right_exp
+          myp5_right.esit();
+          document.getElementById('right_exp').hidden = false;
+          break;
+        case 2: // left_reverse_exp
+          myp5_left_reverse.esit(); // Replace with appropriate function call if needed
+          document.getElementById('left_reverse_exp').hidden = false;
+          break;
+        case 3: // right_reverse_exp
+          myp5_right_reverse.esit(); // Replace with appropriate function call if needed
+          document.getElementById('right_reverse_exp').hidden = false;
+          break;
       }
 
       myp5_left.setSliderRandom();
       myp5_right.setSliderRandom();
-    }
-    );
+      myp5_left_reverse.setSliderRandom();
+      myp5_right_reverse.setSliderRandom();
+    });
+
 
     function isDocumentInFullScreenMode() {
       return document.fullscreenElement !== null;
