@@ -173,17 +173,19 @@ var left_reverse_start = function (p) {
         var car_ratio = car_img.width / car_img.height;
         car_width = p.windowWidth / 10;
         car_height = car_width / car_ratio;
+        console.log("Left Reverse Experiment",car_width, car_height);
 
-        p.push();
-        p.translate(0, p.windowHeight);
-        p.scale(-1, -1);
 
-        p.image(base_img, 0, 0);
-        p.imageMode(p.CENTER);
-        p.pop();
+        // p.push();
+        // p.translate(0, p.windowHeight);
+        // p.scale(-1, -1);
 
-        origin = p.createVector(3 * p.windowWidth / 4, p.windowHeight / 2);
-        p.image(car_img, origin.x, origin.y);
+        // p.image(base_img, 0, 0);
+        // p.imageMode(p.CENTER);
+        // p.pop();
+
+        // origin = p.createVector(3 * p.windowWidth / 4, p.windowHeight / 2);
+        // p.image(car_img, origin.x, origin.y);
 
 
 
@@ -289,10 +291,10 @@ var right_start = function (p) {
         car_width = p.windowWidth / 10;
         car_height = car_width / car_ratio;
         // car_img.resize(car_width, car_height);
-        p.image(base_img, p.windowWidth / 2, 0);
-        p.imageMode(p.CENTER);
-        origin = p.createVector(1 * p.windowWidth / 4, p.windowHeight / 2);
-        p.image(car_img, origin.x, origin.y);
+        // p.image(base_img, p.windowWidth / 2, 0);
+        // p.imageMode(p.CENTER);
+        // origin = p.createVector(1 * p.windowWidth / 4, p.windowHeight / 2);
+        // p.image(car_img, origin.x, origin.y);
         // gui =createGui('Style').setPosition(width - 220, 20)
 
         gui = p.createGui(this, canvas);
@@ -382,7 +384,8 @@ var right_reverse_start = function (p) {
         var car_ratio = car_img.width / car_img.height;
         car_width = p.windowWidth / 10;
         car_height = car_width / car_ratio;
-        car_img.resize(car_width, car_height);
+        // car_img.resize(car_width, car_height);
+        console.log("Right Reverse Experiment",car_width, car_height);
 
         gui = p.createGui(this, canvas);
 
