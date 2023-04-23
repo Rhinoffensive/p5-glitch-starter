@@ -109,6 +109,7 @@ var left_start = function (p) {
     var lastPoint;
     var movement = 0;
     p.draw = function () {
+        document.getElementById('loading_text').style.display = 'none';
         p.background(128);
         p.imageMode(p.CORNER);
         p.image(base_img, 0, 0);
@@ -217,6 +218,7 @@ var left_reverse_start = function (p) {
     var lastPoint;
     var movement = 0;
     p.draw = function () {
+        document.getElementById('loading_text').style.display = 'none';
         p.background(128);
 
         p.push();
@@ -319,7 +321,7 @@ var right_start = function (p) {
     var lastPoint;
     var movement = 0;
     p.draw = function () {
-
+        document.getElementById('loading_text').style.display = 'none';
         p.background(128);
         p.imageMode(p.CORNER);
         p.image(base_img, p.windowWidth / 2, 0);
@@ -408,7 +410,7 @@ var right_reverse_start = function (p) {
     var lastPoint;
     var movement = 0;
     p.draw = function () {
-
+        document.getElementById('loading_text').style.display = 'none';
         p.background(128);
 
         // Base Image
