@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,10 @@
   <!-- <script src="libs/save.js"></script> -->
 </head>
 <style>
+  .qs_main {
+    z-index: 5;
+  }
+
   #toggle_button {
     position: absolute;
     bottom: 20px;
@@ -27,6 +32,7 @@
     z-index: 5;
     display: none;
   }
+
   .trail-count {
     position: absolute;
     bottom: 10px;
@@ -36,6 +42,7 @@
     border-radius: 5px;
     z-index: 5;
   }
+
   .end-experiment {
     position: absolute;
     top: 10px;
@@ -49,6 +56,7 @@
     color: white;
     z-index: 5;
   }
+
   #canvas1,
   #canvas2,
   #canvas3,
@@ -58,18 +66,23 @@
     top: 0;
     border: 1px solid gray;
   }
+
   #canvas1 {
-    z-index: 4;
+    z-index: 1;
   }
+
   #canvas2 {
-    z-index: 3;
+    z-index: 1;
   }
+
   #canvas3 {
-    z-index: 2;
+    z-index: 1;
   }
+
   #canvas4 {
     z-index: 1;
   }
+
   #loading_text {
     position: absolute;
     color: white;
@@ -80,7 +93,10 @@
     font-weight: bold;
     text-align: center;
   }
+
+ 
 </style>
+
 <body>
   <script src="build.js"></script>
   <div id="example_container_" class="center">
@@ -116,35 +132,38 @@
       counterEl.textContent = trailCount;
 
       if (trailCount > 4) {
-        const endExperimentBtn = document.createElement("button");
-        endExperimentBtn.classList.add("button", "end-experiment");
-        endExperimentBtn.textContent = "End Experiment";
-        example_container.appendChild(endExperimentBtn);
-        endExperimentBtn.addEventListener("click", () => {
+        const endExperimentBtn = document.querySelector(".end-experiment");
+        if (!endExperimentBtn) {
+          const endExperimentBtn = document.createElement("button");
+          endExperimentBtn.classList.add("button", "end-experiment");
+          endExperimentBtn.textContent = "End Experiment";
+          example_container.appendChild(endExperimentBtn);
+          endExperimentBtn.addEventListener("click", () => {
 
-          test_data_up.data.push(left_result);
-          test_data_up.data.push(right_result);
-          test_data_down.data.push(left_reverse_result);
-          test_data_down.data.push(right_reverse_result);
+            test_data_up.data.push(left_result);
+            test_data_up.data.push(right_result);
+            test_data_down.data.push(left_reverse_result);
+            test_data_down.data.push(right_reverse_result);
 
 
-          var carsize_diff_up = calculateUserCarSizeDifference(test_data_up);
-          var carsize_diff_down = calculateUserCarSizeDifference(test_data_down);
+            var carsize_diff_up = calculateUserCarSizeDifference(test_data_up);
+            var carsize_diff_down = calculateUserCarSizeDifference(test_data_down);
 
-          test_result = {
-            carsize_diff_up: carsize_diff_up,
-            carsize_diff_down: carsize_diff_down,
-            test_data_up: test_data_up,
-            test_data_down: test_data_down
-          }
+            test_result = {
+              carsize_diff_up: carsize_diff_up,
+              carsize_diff_down: carsize_diff_down,
+              test_data_up: test_data_up,
+              test_data_down: test_data_down
+            }
 
-          socket.emit("end-experiment", test_result);
-          window.location.href = "results/" + carsize_diff_up.widthPercent + "/" + carsize_diff_down.widthPercent;
-          // window.location.href = "anotherpage.html";
-        });
+            socket.emit("end-experiment", [carsize_diff_up.widthPercent - 1.0, carsize_diff_down.widthPercent - 1.0]);
+            window.location.href = "results/" + carsize_diff_up.widthPercent + "/" + carsize_diff_down.widthPercent;
+            // window.location.href = "anotherpage.html";
+
+          });
+        }
       }
     }
-
 
     const fullscreen_btn = document.querySelector('#fullscreen_button');
     fullscreen_btn.addEventListener('click', () => {

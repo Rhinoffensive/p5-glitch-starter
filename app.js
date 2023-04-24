@@ -65,7 +65,13 @@ io.sockets.on('requestLog', function (data) {
 });
 
 
-
+let user_data = [
+  // { connection: "1", data: [1.1, 1.2] },
+  // { connection: "2", data: [1.15, 1.05] },
+  // { connection: "3", data: [1.2, 1.1] },
+  // { connection: "4", data: [1.25, 1.15] },
+  // { connection: "5", data: [1.3, 1.2] },
+];
 
 function newConnection(socket) {
   console.log("New connection " + socket.id);
@@ -73,6 +79,8 @@ function newConnection(socket) {
   socket.on('esit', esitChecked);
   socket.on('end-experiment', (data) => {
     console.log('Received end-experiment event with data:', data);
+    user_data.push({ connection: socket.id, data: data });
+    console.log(user_data)
     // Handle the data here
   });
 

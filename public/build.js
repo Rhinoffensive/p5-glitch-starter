@@ -52,7 +52,6 @@ var left_start = function (p) {
         button.hidden = false;
 
         socket = io();
-
         let div = p.createDiv();
         div.id("left_exp");
 
@@ -79,10 +78,10 @@ var left_start = function (p) {
         car_width = p.windowWidth / 10;
         car_height = car_width / car_ratio;
 
-        p.image(base_img, 0, 0);
-        p.imageMode(p.CENTER);
-        origin = p.createVector(3 * p.windowWidth / 4, p.windowHeight / 2);
-        p.image(car_img, origin.x, origin.y);
+        // p.image(base_img, 0, 0);
+        // p.imageMode(p.CENTER);
+        // origin = p.createVector(3 * p.windowWidth / 4, p.windowHeight / 2);
+        // p.image(car_img, origin.x, origin.y);
 
 
         gui = p.createGui(this, canvas);
@@ -113,17 +112,15 @@ var left_start = function (p) {
         base_img = p.loadImage('assets/BackCar_Intact_upright.jpg');
         car_img = p.loadImage('assets/car.png');
     };
-    var firstPoint;
-    var lastPoint;
-    var movement = 0;
+
     p.draw = function () {
         document.getElementById('loading_text').style.display = 'none';
         p.background(128);
         p.imageMode(p.CORNER);
         p.image(base_img, 0, 0);
+        console.log("left_start",base_img.width, base_img.height);
         p.imageMode(p.CENTER);
         p.image(car_img, 3 * p.windowWidth / 4, p.windowHeight / 2, car_width * (params.r / 100), car_height * (params.r / 100));
-
     };
 
 };
@@ -240,6 +237,8 @@ var left_reverse_start = function (p) {
         p.scale(1, -1);
         p.image(base_img, 0, 0);
         p.imageMode(p.CENTER);
+        console.log("left_reverse_start",base_img.width, base_img.height);
+
         p.pop();
 
         p.imageMode(p.CENTER);
@@ -292,6 +291,7 @@ var right_start = function (p) {
         // Give your canvas a unique ID
         canvas.id('canvas3');
         canvas.parent('right_exp');
+
         document.getElementById('right_exp').hidden = true;
 
 
@@ -336,15 +336,14 @@ var right_start = function (p) {
         base_img = p.loadImage('assets/BackCar_Intact_upright.jpg');
         car_img = p.loadImage('assets/car.png');
     };
-    var firstPoint;
-    var lastPoint;
-    var movement = 0;
+
     p.draw = function () {
         document.getElementById('loading_text').style.display = 'none';
         p.background(128);
         p.imageMode(p.CORNER);
         p.image(base_img, p.windowWidth / 2, 0);
         p.imageMode(p.CENTER);
+        console.log("right_start",base_img.width, base_img.height);
         p.image(car_img, 1 * p.windowWidth / 4, p.windowHeight / 2, car_width * (params.r / 100), car_height * (params.r / 100));
     };
 
@@ -445,6 +444,8 @@ var right_reverse_start = function (p) {
         
         p.scale(1, -1); // Apply the negative scale on the y-axis
         p.image(base_img, 0, 0); // Draw the image at the new position and scale
+        console.log("right_reverse_start",base_img.width, base_img.height);
+
         p.pop(); // Restore the transformation state
 
         // Car Image
