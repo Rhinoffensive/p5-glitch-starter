@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +10,6 @@
   <script src="libs/quicksettings.js" type="text/javascript"></script>
   <script src="libs/p5.gui.js" type="text/javascript"></script>
   <script src="/socket.io/socket.io.js"></script>
-
-
-
   <!-- <script src="libs/save.js"></script> -->
 </head>
 <style>
@@ -31,7 +27,6 @@
     z-index: 5;
     display: none;
   }
-
   .trail-count {
     position: absolute;
     bottom: 10px;
@@ -41,7 +36,6 @@
     border-radius: 5px;
     z-index: 5;
   }
-
   .end-experiment {
     position: absolute;
     top: 10px;
@@ -55,7 +49,6 @@
     color: white;
     z-index: 5;
   }
-
   #canvas1,
   #canvas2,
   #canvas3,
@@ -65,25 +58,18 @@
     top: 0;
     border: 1px solid gray;
   }
-
   #canvas1 {
     z-index: 4;
   }
-
   #canvas2 {
     z-index: 3;
   }
-
   #canvas3 {
     z-index: 2;
   }
-
   #canvas4 {
     z-index: 1;
   }
-
-
-
   #loading_text {
     position: absolute;
     color: white;
@@ -95,9 +81,7 @@
     text-align: center;
   }
 </style>
-
 <body>
-
   <script src="build.js"></script>
   <div id="example_container_" class="center">
     <div id="loading_text">Loading...</div>
@@ -107,10 +91,7 @@
       <p><span id="trail-count" class="trail-count">1</span></p>
     </div>
   </div>
-
   <div> <button id="fullscreen_button" class="button">START EXPERIMENT</button></div>
-
-
   <script>
     let trailCount = 1;
     let myp5_left, myp5_right, myp5_left_reverse, myp5_right_reverse;
@@ -150,6 +131,12 @@
           var carsize_diff_up = calculateUserCarSizeDifference(test_data_up);
           var carsize_diff_down = calculateUserCarSizeDifference(test_data_down);
 
+          test_result = {
+            carsize_diff_up: carsize_diff_up,
+            carsize_diff_down: carsize_diff_down,
+            test_data_up: test_data_up,
+            test_data_down: test_data_down
+          }
 
           socket.emit("end-experiment", test_result);
           window.location.href = "results/" + carsize_diff_up.widthPercent + "/" + carsize_diff_down.widthPercent;
@@ -172,14 +159,7 @@
         myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
 
         isP5initialize = true;
-
-        
-
       }
-
-
-
-      // left_exp_div.style.display = "none";
     });
 
 

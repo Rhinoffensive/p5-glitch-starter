@@ -30,6 +30,9 @@ app.get('/data', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'datapage.html'));
 });
 
+app.get('/live', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'livedata.html'));
+});
 
 // app.get('/result', function (req, res) {
 //   res.sendFile(path.join(__dirname, 'public', 'result.html'));
