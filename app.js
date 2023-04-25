@@ -51,6 +51,9 @@ app.get('/api/user-data', (req, res) => {
   res.json(user_data);
 });
 
+app.get('/api/clear-user-data', (req, res) => {
+  user_data = [];
+});
 
 
 
