@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plotly.js Combined Line and Bar Plot</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <style>
         body {
             background-color: gray;
@@ -28,101 +29,125 @@
     <div id="combined-plot"></div>
 
     <script>
-        const data = [
-            { connection: "1", data: [1.1, 1.2] },
-            { connection: "2", data: [1.15, 1.05] },
-            { connection: "3", data: [1.2, 1.1] },
-            { connection: "4", data: [1.25, 1.15] },
-            { connection: "5", data: [1.3, 1.2] },
-        ];
 
-        const lineData = data.map((d, i) => {
-            return {
-                x: [`(Up)`, `(Down)`],
-                y: d.data,
-                mode: 'lines+markers',
-                type: 'scatter',
-                name: `Connection ${d.connection}`,
-                line: { shape: 'linear' },
-                marker: { size: 8 },
+        // const socket = io();
+        // socket.on('new-data-point', (data) => {
+        //     console.log('New data received:', data);
+        //     // Now you can use the new data for your plot
+        // });
+
+        async function fetchUserData() {
+            const response = await fetch('/api/user-data');
+            const data = await response.json();
+            console.log('Fetched user data:', data);
+            return data;
+            // Now you can use the fetched data for your plot
+        }
+
+
+
+
+        // const data = [
+        //     { connection: "1", data: [1.1, 1.2] }, 
+        //     // { connection: "2", data: [1.15, 1.05] },
+        //     // { connection: "3", data: [1.2, 1.1] },
+        //     // { connection: "4", data: [1.25, 1.15] },
+        //     // { connection: "5", data: [1.3, 1.2] },
+        // ];
+
+        async function main() {
+
+            const data = await fetchUserData();
+
+            const lineData = data.map((d, i) => {
+                return {
+                    x: [`(Up)`, `(Down)`],
+                    y: d.data,
+                    mode: 'lines+markers',
+                    type: 'scatter',
+                    name: `Connection ${d.connection}`,
+                    line: { shape: 'linear' },
+                    marker: { size: 8 },
+                };
+            });
+
+            const upAvg = data.reduce((sum, d) => sum + d.data[0], 0) / data.length;
+            const downAvg = data.reduce((sum, d) => sum + d.data[1], 0) / data.length;
+
+            const barData = [
+                {
+                    x: ['(Up)'],
+                    y: [upAvg],
+                    type: 'bar',
+                    name: 'Average Up',
+                    width: 0.2
+                },
+                {
+                    x: ['(Down)'],
+                    y: [downAvg],
+                    type: 'bar',
+                    name: 'Average Down',
+                    width: 0.2
+
+                }
+            ];
+
+            const combinedData = [...lineData, ...barData];
+
+            const layout = {
+                title: {
+                    text: 'Combined Width Percent Line and Bar Plot',
+                    backgroundcolor: 'rgba(0, 230, 230, 1)', // Change x-axis title area background color here
+                    font: {
+                        size: 24 // Adjust title font size here
+                    },
+
+                },
+                xaxis: {
+                    title: {
+                        text: 'Connection',
+                        font: {
+                            size: 18 // Adjust x-axis title font size here
+                        }
+                    },
+                    tickfont: {
+                        size: 24 // Adjust x-axis tick labels font size here
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Perceived Percent',
+                        font: {
+                            size: 24 // Adjust y-axis title font size here
+                        }
+                    },
+                    tickfont: {
+                        size: 14 // Adjust y-axis tick labels font size here
+                    }
+                },
+                showlegend: true,
+                barmode: 'group',
+                legend: {
+                    font: {
+                        size: 16 // Adjust legend font size here
+                    }
+                },
+                plot_bgcolor: 'rgba(128, 128, 128, 1)', // Change the plotting area background color here
+                paper_bgcolor: 'rgba(128, 128, 128, 1)', // Change the panel background color inside the plotting area here
+                // margin: {
+                //     l: 50,
+                //     r: 50,
+                //     b: 50,
+                //     t: 50,
+                //     pad: 4,
+                //     bgcolor: 'rgba(240, 240, 240, 1)' // Change the panel background color outside the plotting area here
+                // }
             };
-        });
-
-        const upAvg = data.reduce((sum, d) => sum + d.data[0], 0) / data.length;
-        const downAvg = data.reduce((sum, d) => sum + d.data[1], 0) / data.length;
-
-        const barData = [
-            {
-                x: ['(Up)'],
-                y: [upAvg],
-                type: 'bar',
-                name: 'Average Up',
-                width: 0.2
-            },
-            {
-                x: ['(Down)'],
-                y: [downAvg],
-                type: 'bar',
-                name: 'Average Down',
-                width: 0.2
-
-            }
-        ];
-
-        const combinedData = [...lineData, ...barData];
-
-        const layout = {
-            title: {
-                text: 'Combined Width Percent Line and Bar Plot',
-                backgroundcolor: 'rgba(0, 230, 230, 1)', // Change x-axis title area background color here
-                font: {
-                    size: 24 // Adjust title font size here
-                },
-
-            },
-            xaxis: {
-                title: {
-                    text: 'Connection',
-                    font: {
-                        size: 18 // Adjust x-axis title font size here
-                    }
-                },
-                tickfont: {
-                    size: 24 // Adjust x-axis tick labels font size here
-                }
-            },
-            yaxis: {
-                title: {
-                    text: 'Perceived Percent',
-                    font: {
-                        size: 24 // Adjust y-axis title font size here
-                    }
-                },
-                tickfont: {
-                    size: 14 // Adjust y-axis tick labels font size here
-                }
-            },
-            showlegend: true,
-            barmode: 'group',
-            legend: {
-                font: {
-                    size: 16 // Adjust legend font size here
-                }
-            },
-            plot_bgcolor: 'rgba(128, 128, 128, 1)', // Change the plotting area background color here
-            paper_bgcolor: 'rgba(128, 128, 128, 1)', // Change the panel background color inside the plotting area here
-            // margin: {
-            //     l: 50,
-            //     r: 50,
-            //     b: 50,
-            //     t: 50,
-            //     pad: 4,
-            //     bgcolor: 'rgba(240, 240, 240, 1)' // Change the panel background color outside the plotting area here
-            // }
-        };
 
 
-        Plotly.newPlot('combined-plot', combinedData, layout);
+            Plotly.newPlot('combined-plot', combinedData, layout);
+        }
+        setInterval(main, 1000);
     </script>
 </body>
 

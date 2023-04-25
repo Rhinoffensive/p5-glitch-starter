@@ -46,6 +46,11 @@ app.get('/results/:scale1/:scale2', function (req, res) {
   res.render('result', { scale1: scale1, scale2: scale2 });
 });
 
+// Create an API endpoint to get user_data
+app.get('/api/user-data', (req, res) => {
+  res.json(user_data);
+});
+
 
 
 
@@ -75,18 +80,10 @@ let user_data = [
 
 function newConnection(socket) {
   console.log("New connection " + socket.id);
-
-  socket.on('esit', esitChecked);
   socket.on('end-experiment', (data) => {
     console.log('Received end-experiment event with data:', data);
     user_data.push({ connection: socket.id, data: data });
-    console.log(user_data)
-    // Handle the data here
+    // io.emit('new-data-point', { connection: socket.id, data: data });
+ 
   });
-
-  function esitChecked(data) {
-
-    log += "Connection: " + socket.id + ", Car width, height: " + data + "\n";
-    io.emit("logUpdated", log);
-  }
 }
