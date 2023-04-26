@@ -17,21 +17,30 @@
   .qs_main {
     z-index: 5;
   }
+/* rgba(70, 118, 70, 0.878); border */
+#toggle_button {
+  position: fixed; /* changed to fixed positioning */
+  top: 50%; /* center vertically */
+  left: 50%; /* center horizontally */
+  transform: translate(-50%, -50%); /* adjust positioning */
+  font-size: 14px; /* reduced font size */
+  padding: 16px 10px; /* reduced padding */
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(70, 118, 70, 0.878);;
+  border-radius: 4px;
+  color: white;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  display: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
 
-  #toggle_button {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    /* transform: translateX(-50%); */
-    font-size: 16px;
-    padding: 8px 16px;
-    background-color: gray;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    z-index: 5;
-    display: none;
-  }
+#toggle_button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: green;
+}
 
   .trail-count {
     position: absolute;
@@ -48,12 +57,12 @@
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2rem;
+    font-size: 1rem;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     background-color: #D03838;
-    color: rgb(227, 233, 237); 
+    color: rgb(227, 233, 237);
     z-index: 5;
   }
 
@@ -93,8 +102,6 @@
     font-weight: bold;
     text-align: center;
   }
-
- 
 </style>
 
 <body>
@@ -119,7 +126,7 @@
     const button = document.querySelector('#toggle_button');
     button.hidden = true;
     example_container.hidden = true;
-    let isP5initialize = false;
+    
 
     const counterEl = document.getElementById("trail-count");
 
@@ -166,20 +173,31 @@
     }
 
     const fullscreen_btn = document.querySelector('#fullscreen_button');
+    let isP5initialize = false;
+
+    function createP5Objects() {
+      if (!isP5initialize) {
+        myp5_right_reverse = new p5(right_reverse_start, 'example_container_');
+        myp5_left_reverse = new p5(left_reverse_start, 'example_container_');
+        myp5_right = new p5(right_start, 'example_container_');
+        myp5_left = new p5(left_start, 'example_container_');
+
+        isP5initialize = true;
+      }
+    }
+
     fullscreen_btn.addEventListener('click', () => {
       example_container.requestFullscreen();
       fullscreen_btn.style.display = "none";
       example_container.hidden = false;
+    });
 
-      if (!isP5initialize) {
-        myp5_right_reverse = new p5(right_reverse_start, 'example_container_'); // use the current state to determine which function to use
-        myp5_left_reverse = new p5(left_reverse_start, 'example_container_'); // use the current state to determine which function to use
-        myp5_right = new p5(right_start, 'example_container_'); // use the current state to determine which function to use
-        myp5_left = new p5(left_start, 'example_container_'); // use the current state to determine which function to use
-
-        isP5initialize = true;
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement === example_container) {
+        createP5Objects();
       }
     });
+
 
 
     document.addEventListener('DOMContentLoaded', function () {
