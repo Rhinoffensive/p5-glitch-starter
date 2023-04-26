@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plotly.js Combined Line and Bar Plot</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
     <style>
         body {
-            background-color: gray;
+            background-color: #E3E9ED;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,7 +61,7 @@
 
             const lineData = data.map((d, i) => {
                 return {
-                    x: [`(Up)`, `(Down)`],
+                    x: [`Upright`, `Inverted`],
                     y: d.data,
                     mode: 'lines+markers',
                     type: 'scatter',
@@ -76,18 +76,25 @@
 
             const barData = [
                 {
-                    x: ['(Up)'],
+                    x: ['Upright'],
                     y: [upAvg],
                     type: 'bar',
                     name: 'Average Up',
-                    width: 0.2
+                    width: 0.2,
+                    marker: {
+                        color: '#D03838' // Set Upright color to [208, 56, 56] (#D03838)
+                    }
                 },
                 {
-                    x: ['(Down)'],
+                    x: ['Inverted'],
                     y: [downAvg],
                     type: 'bar',
                     name: 'Average Down',
-                    width: 0.2
+                    width: 0.2,
+                    marker: {
+                        color: '#264A5C' // Set Inverted color to [38, 74, 92] (#264A5C)
+                    }
+
 
                 }
             ];
@@ -96,7 +103,7 @@
 
             const layout = {
                 title: {
-                    text: 'Combined Width Percent Line and Bar Plot',
+                    text: '',
                     backgroundcolor: 'rgba(0, 230, 230, 1)', // Change x-axis title area background color here
                     font: {
                         size: 24 // Adjust title font size here
@@ -105,7 +112,7 @@
                 },
                 xaxis: {
                     title: {
-                        text: 'Connection',
+                        text: '',
                         font: {
                             size: 18 // Adjust x-axis title font size here
                         }
@@ -133,8 +140,8 @@
                         size: 16 // Adjust legend font size here
                     }
                 },
-                plot_bgcolor: 'rgba(128, 128, 128, 1)', // Change the plotting area background color here
-                paper_bgcolor: 'rgba(128, 128, 128, 1)', // Change the panel background color inside the plotting area here
+                plot_bgcolor: 'rgba(227, 233, 237, 1)', // Change the plotting area background color here
+                paper_bgcolor: 'rgba(227, 233, 237, 1)', // Change the panel background color inside the plotting area here
                 // margin: {
                 //     l: 50,
                 //     r: 50,
