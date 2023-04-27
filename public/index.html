@@ -14,6 +14,13 @@
   <!-- <script src="libs/save.js"></script> -->
 </head>
 <style>
+  html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+
   .qs_main {
     z-index: 5;
   }
@@ -110,6 +117,18 @@
     font-weight: bold;
     text-align: center;
   }
+
+
+  #example_container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  z-index: 9999;
+  display: none;
+}
 </style>
 
 <body>
@@ -194,15 +213,28 @@
       }
     }
 
-    fullscreen_btn.addEventListener('click', () => {
-      if (example_container.requestFullscreen) {
-        example_container.requestFullscreen();
-      } else if (example_container.webkitRequestFullscreen) { // Safari
-        example_container.webkitRequestFullscreen();
-      }
-      fullscreen_btn.style.display = "none";
-      example_container.hidden = false;
-    });
+    // const example_container = document.getElementById('example_container');
+// const fullscreen_btn = document.getElementById('fullscreen_button');
+
+fullscreen_btn.addEventListener('click', () => {
+  fullscreen_btn.style.display = "none";
+  example_container.style.display = "block";
+});
+
+    // fullscreen_btn.addEventListener('click', () => {
+    //   if (example_container.requestFullscreen) {
+    //     example_container.requestFullscreen();
+    //   } else if (example_container.webkitRequestFullscreen) { // Safari
+    //     example_container.webkitRequestFullscreen();
+    //   } else if (example_container.mozRequestFullScreen) { // Firefox
+    //     example_container.mozRequestFullScreen();
+    //   } else if (example_container.msRequestFullscreen) { // IE/Edge
+    //     example_container.msRequestFullscreen();
+    //   }
+
+    //   fullscreen_btn.style.display = "none";
+    //   example_container.hidden = false;
+    // });
 
 
     document.addEventListener('fullscreenchange', () => {
