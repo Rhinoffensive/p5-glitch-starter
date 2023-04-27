@@ -14,11 +14,12 @@
   <!-- <script src="libs/save.js"></script> -->
 </head>
 <style>
-  html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-}
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
 
 
   .qs_main {
@@ -120,15 +121,15 @@
 
 
   #example_container {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #f0f0f0;
-  z-index: 9999;
-  display: none;
-}
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f0f0f0;
+    z-index: 9999;
+    display: none;
+  }
 </style>
 
 <body>
@@ -214,13 +215,13 @@
     }
 
     // const example_container = document.getElementById('example_container');
-// const fullscreen_btn = document.getElementById('fullscreen_button');
+    // const fullscreen_btn = document.getElementById('fullscreen_button');
 
-fullscreen_btn.addEventListener('click', () => {
-  fullscreen_btn.style.display = "none";
-  example_container.style.display = "block";
-});
-
+    fullscreen_btn.addEventListener('click', () => {
+      fullscreen_btn.style.display = "none";
+      example_container.style.display = "block";
+      initializeP5ObjectsIfNeeded();
+    });
     // fullscreen_btn.addEventListener('click', () => {
     //   if (example_container.requestFullscreen) {
     //     example_container.requestFullscreen();
@@ -243,6 +244,11 @@ fullscreen_btn.addEventListener('click', () => {
       }
     });
 
+    function initializeP5ObjectsIfNeeded() {
+      if (!isP5initialize) {
+        createP5Objects();
+      }
+    }
 
 
     document.addEventListener('DOMContentLoaded', function () {
