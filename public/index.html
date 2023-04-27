@@ -17,30 +17,38 @@
   .qs_main {
     z-index: 5;
   }
-/* rgba(70, 118, 70, 0.878); border */
-#toggle_button {
-  position: fixed; /* changed to fixed positioning */
-  top: 50%; /* center vertically */
-  left: 50%; /* center horizontally */
-  transform: translate(-50%, -50%); /* adjust positioning */
-  font-size: 14px; /* reduced font size */
-  padding: 16px 10px; /* reduced padding */
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(70, 118, 70, 0.878);;
-  border-radius: 4px;
-  color: white;
-  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 5;
-  display: none;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
 
-#toggle_button:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-color: green;
-}
+  /* rgba(70, 118, 70, 0.878); border */
+  #toggle_button {
+    position: fixed;
+    /* changed to fixed positioning */
+    top: 50%;
+    /* center vertically */
+    left: 50%;
+    /* center horizontally */
+    transform: translate(-50%, -50%);
+    /* adjust positioning */
+    font-size: 14px;
+    /* reduced font size */
+    padding: 16px 10px;
+    /* reduced padding */
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 118, 70, 0.878);
+    ;
+    border-radius: 4px;
+    color: white;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    display: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  #toggle_button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-color: green;
+  }
 
   .trail-count {
     position: absolute;
@@ -126,7 +134,7 @@
     const button = document.querySelector('#toggle_button');
     button.hidden = true;
     example_container.hidden = true;
-    
+
 
     const counterEl = document.getElementById("trail-count");
 
@@ -187,10 +195,15 @@
     }
 
     fullscreen_btn.addEventListener('click', () => {
-      example_container.requestFullscreen();
+      if (example_container.requestFullscreen) {
+        example_container.requestFullscreen();
+      } else if (example_container.webkitRequestFullscreen) { // Safari
+        example_container.webkitRequestFullscreen();
+      }
       fullscreen_btn.style.display = "none";
       example_container.hidden = false;
     });
+
 
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement === example_container) {
