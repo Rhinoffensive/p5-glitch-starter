@@ -217,11 +217,7 @@
     // const example_container = document.getElementById('example_container');
     // const fullscreen_btn = document.getElementById('fullscreen_button');
 
-    fullscreen_btn.addEventListener('click', () => {
-      fullscreen_btn.style.display = "none";
-      example_container.style.display = "block";
-      initializeP5ObjectsIfNeeded();
-    });
+  
     // fullscreen_btn.addEventListener('click', () => {
     //   if (example_container.requestFullscreen) {
     //     example_container.requestFullscreen();
@@ -341,13 +337,22 @@
       }
     });
 
+    // fullscreen_btn.addEventListener('click', () => {
+    //   fullscreen_btn.style.display = "none";
+    //   example_container.style.display = "block";
+    //   initializeP5ObjectsIfNeeded();
+    // });
+
 
     fullscreen_btn.addEventListener('click', () => {
       // const container = document.querySelector("#example_container_");
       example_container.requestFullscreen().catch((error) => {
       });
       screen.orientation.lock("landscape");
-      fullscreen_btn.hidden = true;
+      fullscreen_btn.style.display = "none";
+      example_container.style.display = "block";
+      initializeP5ObjectsIfNeeded();
+      
     });
 
 
