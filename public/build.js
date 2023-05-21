@@ -94,7 +94,7 @@ var left_start = function (p) {
 
         gui.id = 'guiLeft';
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(3 * p.windowWidth / 4 - gui_width / 2, p.windowHeight - 50);
+        gui.setPosition(3 * p.windowWidth / 4 - gui_width / 2, p.windowHeight * 0.8);
 
 
 
@@ -212,7 +212,7 @@ var left_reverse_start = function (p) {
 
         // gui.id = 'guiReverseLeft';
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(3 * p.windowWidth / 4 - gui_width / 2, p.windowHeight - 50);
+        gui.setPosition(3 * p.windowWidth / 4 - gui_width / 2, p.windowHeight * 0.8);
 
 
         p.sliderRange(1, 500, 1);
@@ -343,7 +343,7 @@ var right_start = function (p) {
         gui = p.createGui(this, canvas);
 
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(1 * p.windowWidth / 4 - gui_width / 2, p.windowHeight - 50);
+        gui.setPosition(1 * p.windowWidth / 4 - gui_width / 2, p.windowHeight * 0.8);
 
         p.sliderRange(1, 500, 1);
         gui.addObject(p.params);
@@ -454,7 +454,7 @@ var right_reverse_start = function (p) {
         gui = p.createGui(this, canvas);
 
         let gui_width = document.getElementsByClassName('qs_main')[0].offsetWidth;
-        gui.setPosition(1 * p.windowWidth / 4 - gui_width / 2, p.windowHeight - 50);
+        gui.setPosition(1 * p.windowWidth / 4 - gui_width / 2, p.windowHeight * 0.8 );
 
         p.sliderRange(1, 500, 1);
         gui.addObject(p.params);
