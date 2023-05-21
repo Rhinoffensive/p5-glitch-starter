@@ -14,14 +14,6 @@
   <!-- <script src="libs/save.js"></script> -->
 </head>
 <style>
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-  }
-
-
   .qs_main {
     z-index: 5;
   }
@@ -118,33 +110,62 @@
     font-weight: bold;
     text-align: center;
   }
-
-
-  #example_container {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #f0f0f0;
-    z-index: 9999;
-    display: none;
-  }
 </style>
 
 <body>
-  <script src="build.js"></script>
+
   <div id="example_container_" class="center">
     <div id="loading_text">Loading...</div>
     <button id="toggle_button" class="button">✅</button>
+    <div id="left_exp" hidden></div>
+    <div id="right_exp" hidden></div>
+    <div id="left_reverse_exp" hidden></div>
+    <div id="right_reverse_exp" hidden></div>
     <div style="position: relative;">
       <p>Trial:</p>
       <p><span id="trail-count" class="trail-count">1</span></p>
     </div>
   </div>
   <div> <button id="fullscreen_button" class="button">START EXPERIMENT</button></div>
+  <script src="build.js"></script>
   <script>
-    let trailCount = 1;
+
+    function handleVisibility(state) {
+      // Get all elements
+      let left_exp = document.getElementById('left_exp');
+      let right_exp = document.getElementById('right_exp');
+      let left_reverse_exp = document.getElementById('left_reverse_exp');
+      let right_reverse_exp = document.getElementById('right_reverse_exp');
+
+      // Hide all elements by default
+      left_exp.hidden = true;
+      right_exp.hidden = true;
+      left_reverse_exp.hidden = true;
+      right_reverse_exp.hidden = true;
+
+      switch (state) {
+        case 0: // left_exp
+          left_exp.hidden = false;
+          break;
+        case 1: // right_reverse_exp
+          right_reverse_exp.hidden = false;
+          break;
+        case 2: // right_exp
+          right_exp.hidden = false;
+          break;
+        case 3: // left_reverse_exp
+          left_reverse_exp.hidden = false;
+          break;
+        default:
+          console.error("Invalid state provided: ", state);
+          break;
+      }
+      console.log("State: ", state);
+    }
+
+
+
+    let trailCount = 0;
     let myp5_left, myp5_right, myp5_left_reverse, myp5_right_reverse;
     let left_exp_div, right_exp_div, left_reverse_exp_div, right_reverse_exp_div;
     let test_result = {}; // test result handler
@@ -164,9 +185,9 @@
 
     function updateCounter() {
       trailCount++;
-      counterEl.textContent = trailCount;
+      counterEl.textContent = trailCount + 1;
 
-      if (trailCount > 4) {
+      if (trailCount > 3) {
         const endExperimentBtn = document.querySelector(".end-experiment");
         if (!endExperimentBtn) {
           const endExperimentBtn = document.createElement("button");
@@ -184,6 +205,11 @@
             var carsize_diff_up = calculateUserCarSizeDifference(test_data_up);
             var carsize_diff_down = calculateUserCarSizeDifference(test_data_down);
 
+            console.log("Test data up: ", test_data_up);
+            console.log("diff up: ", carsize_diff_up);
+            console.log("Test data down: ", test_data_down);
+            console.log("diff down: ", carsize_diff_down);
+
             test_result = {
               carsize_diff_up: carsize_diff_up,
               carsize_diff_down: carsize_diff_down,
@@ -192,8 +218,8 @@
             }
 
             socket.emit("end-experiment", [carsize_diff_up.widthPercent - 1.0, carsize_diff_down.widthPercent - 1.0]);
-            window.location.href = "results/" + carsize_diff_up.widthPercent + "/" + carsize_diff_down.widthPercent;
-            // window.location.href = "anotherpage.html";
+            console.log("test_result: ", carsize_diff_up.widthPercent, carsize_diff_down.widthPercent);
+            window.location.href = "results/" + (carsize_diff_up.widthPercent ) + "/" + (carsize_diff_down.widthPercent  );
 
           });
         }
@@ -211,40 +237,31 @@
         myp5_left = new p5(left_start, 'example_container_');
 
         isP5initialize = true;
+
+
+
+
       }
+
     }
 
-    // const example_container = document.getElementById('example_container');
-    // const fullscreen_btn = document.getElementById('fullscreen_button');
-
-  
-    // fullscreen_btn.addEventListener('click', () => {
-    //   if (example_container.requestFullscreen) {
-    //     example_container.requestFullscreen();
-    //   } else if (example_container.webkitRequestFullscreen) { // Safari
-    //     example_container.webkitRequestFullscreen();
-    //   } else if (example_container.mozRequestFullScreen) { // Firefox
-    //     example_container.mozRequestFullScreen();
-    //   } else if (example_container.msRequestFullscreen) { // IE/Edge
-    //     example_container.msRequestFullscreen();
-    //   }
-
-    //   fullscreen_btn.style.display = "none";
-    //   example_container.hidden = false;
-    // });
-
+    fullscreen_btn.addEventListener('click', () => {
+      example_container.requestFullscreen();
+      fullscreen_btn.style.display = "none";
+      example_container.hidden = false;
+    });
 
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement === example_container) {
         createP5Objects();
       }
+
+      if (!isDocumentInFullScreenMode()) {
+        fullscreen_btn.style.display = "block";
+        example_container.hidden = true;
+      }
     });
 
-    function initializeP5ObjectsIfNeeded() {
-      if (!isP5initialize) {
-        createP5Objects();
-      }
-    }
 
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -252,76 +269,48 @@
       right_exp_div = document.getElementById('right_exp');
       left_reverse_exp_div = document.getElementById('left_reverse_exp');
       right_reverse_exp_div = document.getElementById('right_reverse_exp');
+      handleVisibility(0);
+
 
     });
 
-    button.addEventListener('click', updateCounter);
 
-    // let state = 0; // Initialize state variable
+
+    let state = 0; // Initialize state variable
     button.addEventListener('click', () => {
-      // state = (state + 1) % 4; // Increment and wrap state between 0 and 3
-      state = (trailCount - 1) % 4;
-      if (trailCount > 4) {
-        // Random integer between 0 and 3
-        state = Math.floor(Math.random() * 4);
-      }
-
-      // Hide all elements by default
-      let left_exp = document.getElementById('left_exp');
-      let right_exp = document.getElementById('right_exp');
-      let left_reverse_exp = document.getElementById('left_reverse_exp');
-      let right_reverse_exp = document.getElementById('right_reverse_exp');
-
-      left_exp.hidden = true;
-      right_exp.hidden = true;
-      left_reverse_exp.hidden = true;
-      right_reverse_exp.hidden = true;
-
-      // document.getElementById('left_exp').hidden = true;
-      // document.getElementById('right_exp').hidden = true;
-      // document.getElementById('left_reverse_exp').hidden = true;
-      // document.getElementById('right_reverse_exp').hidden = true;
-      console.log(state);
-
+     
       switch (state) {
         case 0: // left_exp
           myp5_left.esit();
-          left_exp.hidden = false;
-          right_exp.hidden = true;
-          left_reverse_exp.hidden = true;
-          right_reverse_exp.hidden = true;
-          // document.getElementById('left_exp').hidden = false;
           break;
         case 2: // right_exp
           myp5_right.esit();
-          left_exp.hidden = true;
-          right_exp.hidden = false;
-          left_reverse_exp.hidden = true;
-          right_reverse_exp.hidden = true;
-          // document.getElementById('right_exp').hidden = false;
           break;
         case 3: // left_reverse_exp
           myp5_left_reverse.esit(); // Replace with appropriate function call if needed
-          left_exp.hidden = true;
-          right_exp.hidden = true;
-          left_reverse_exp.hidden = false;
-          right_reverse_exp.hidden = true;
-          // document.getElementById('left_reverse_exp').hidden = false;
           break;
         case 1: // right_reverse_exp
           myp5_right_reverse.esit(); // Replace with appropriate function call if needed
-          left_exp.hidden = true;
-          right_exp.hidden = true;
-          left_reverse_exp.hidden = true;
-          right_reverse_exp.hidden = false;
-          // document.getElementById('right_reverse_exp').hidden = false;
           break;
       }
+
+   
+
 
       myp5_left.setSliderRandom();
       myp5_right.setSliderRandom();
       myp5_left_reverse.setSliderRandom();
       myp5_right_reverse.setSliderRandom();
+
+      updateCounter();
+      state = (trailCount) % 4;
+      if (trailCount > 4) {
+        // Random integer between 0 and 3
+        state = Math.floor(Math.random() * 4);
+      }
+
+      handleVisibility(state);
+
     });
 
 
@@ -329,37 +318,22 @@
       return document.fullscreenElement !== null;
     }
 
-
-    addEventListener('fullscreenchange', (event) => {
-      if (!isDocumentInFullScreenMode()) {
-        fullscreen_btn.style.display = "block";
-        example_container.hidden = true;
-      }
-    });
-
-    // fullscreen_btn.addEventListener('click', () => {
-    //   fullscreen_btn.style.display = "none";
-    //   example_container.style.display = "block";
-    //   initializeP5ObjectsIfNeeded();
-    // });
-
-
     fullscreen_btn.addEventListener('click', () => {
-      // const container = document.querySelector("#example_container_");
+
       example_container.requestFullscreen().catch((error) => {
       });
       screen.orientation.lock("landscape");
-      fullscreen_btn.style.display = "none";
-      example_container.style.display = "block";
-      initializeP5ObjectsIfNeeded();
-      
+      fullscreen_btn.hidden = true;
     });
 
 
     function calculateUserCarSizeDifference(obj) {
+      // console.log(obj);
+
       let totalWidth = 0;
       let totalHeight = 0;
       let count = 0;
+
 
       obj.data.forEach(obj => {
         obj.user_car_size.forEach(size => {
@@ -379,6 +353,15 @@
       let heightDiff = ((avgHeight - baseHeight) / baseHeight);
       let widthPer = (avgWidth / baseWidth);
 
+      // console.log({
+      //   avgWidth: avgWidth.toFixed(2),
+      //   avgHeight: avgHeight.toFixed(2),
+      //   widthDiff: widthDiff.toFixed(2),
+      //   heightDiff: heightDiff.toFixed(2),
+      //   widthPercent: widthPer
+
+      // });
+
       return {
         avgWidth: avgWidth.toFixed(2),
         avgHeight: avgHeight.toFixed(2),
@@ -388,21 +371,7 @@
 
       };
     }
-    function hideCanvas(p5Instance) {
-      if (p5Instance && p5Instance.canvas) {
-        p5Instance.canvas.parrent.hidden = false;
-      } else {
-        console.error("p5Instance or canvas is not defined");
-      }
-    }
 
-    function unhideCanvas(p5Instance) {
-      if (p5Instance && p5Instance.canvas) {
-        p5Instance.canvas.parrent.hidden = false;
-      } else {
-        console.error("p5Instance or canvas is not defined");
-      }
-    }
   </script>
 
 </body>
